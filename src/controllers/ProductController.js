@@ -14,8 +14,8 @@ class ProductController{
         try{
             const {name, description, price, stock, category} = req.body;
 
-            if(!name || !price || !category){
-                return res.status(400).json({error: 'Nome e/ou preco e/ou categoria nao informados'});
+            if(!name || !description || !price || stock===undefined ||!category){
+                return res.status(400).json({error: 'Um ou mais campos nao informados'});
             }
 
             const product = await prisma.product.create({
@@ -23,7 +23,7 @@ class ProductController{
                     name,
                     description,
                     price: parseFloat(price),
-                    stock: parseInt(stock) || 0,
+                    stock: parseInt(stock),
                     category
                 }
             });
