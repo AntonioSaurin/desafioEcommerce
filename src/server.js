@@ -3,11 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const productRoutes= require('./routes/productRoutes');
 const app = express();
 
 app.use(express.json());
 app.use(userRoutes);
 app.use(authRoutes);
+app.use(productRoutes);
 app.get('/', (req, res) => {
     res.json({message: 'Success!'});
 });
