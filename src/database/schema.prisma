@@ -4,6 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 generator client {
   provider = "prisma-client-js"
+  migrationsPath = "src/database/migrations"
 }
 
 datasource db {
@@ -15,6 +16,7 @@ model User {
   name          String
   email         String   @unique
   password_hash String
+  active      Boolean  @default(true)
   created_at    DateTime @default(now())
   
   orders        Order[]
@@ -29,6 +31,7 @@ model Product {
   price       Decimal  @db.Decimal(10, 2)
   stock       Int
   category    String
+  active      Boolean  @default(true)
   created_at  DateTime @default(now())
 
   order_items OrderItem[]
@@ -41,6 +44,7 @@ model Order {
   user_id    String
   status     String   @default("pendente") // pendente | processando | concluido
   total      Decimal  @db.Decimal(10, 2)
+  active      Boolean  @default(true)
   created_at DateTime @default(now())
 
   user       User        @relation(fields: [user_id], references: [id])
@@ -55,6 +59,7 @@ model OrderItem {
   product_id String
   quantity   Int
   unit_price Decimal @db.Decimal(10, 2)
+  active      Boolean  @default(true)
 
   order      Order   @relation(fields: [order_id], references: [id])
   product    Product @relation(fields: [product_id], references: [id])
